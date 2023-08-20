@@ -1,0 +1,25 @@
+---
+- name: Install Vector | APT Install
+  become: true
+  ansible.builtin.apt:
+    deb: https://packages.timber.io/vector/{{ vector_version }}/vector_{{ vector_version }}-1_amd64.deb
+  notify: Restart vector service
+
+- name: Configure Vector | Rensure what directory exists
+  ansible.builtin.file:
+    path: "{{ vectore_config_dir }}"
+    state: directory
+    mode: "0644"
+- name: Configure Vector | Template Configure
+  become: true
+  ansible.builtin.template:
+    src: vector.yml.j2
+    mode: "0644"
+    dest: "{{ vectore_config_dir }}/vector.yml"
+- name: Configure Vector | Template system unit
+  become: true
+  ansible.builtin.template:
+    src: vector.service.j2
+    dest: "/etc/systemd/system/vector.service"
+    mode: "0644"
+  notify: Restart vector service
