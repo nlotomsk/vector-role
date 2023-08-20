@@ -21,11 +21,6 @@ For testing purposes, Molecule with Docker as driver and Goss as verifier.
 Installing
 Create or add to your roles dependency file (e.g requirements.yml):
 
-- src: idealista.vector_role
-  version: 1.0.0
-  name: vector_role
-Install the role with ansible-galaxy command:
-
 ansible-galaxy install -p roles -r requirements.yml -f
 Use in a playbook:
 
